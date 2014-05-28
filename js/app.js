@@ -7,7 +7,7 @@
 	var e={};
 	["loginView","evaluationView","updateSuccessView"].forEach(function(t){
 		templateCode=document.getElementById(t).text;
-		e[t]=doT.template(templateCode)
+		e[t]=doT.template(templateCode) //把模板壓在html上
 	});
 	var t={
 		loginRequiredView:function(e){
@@ -16,6 +16,7 @@
 				if(t){
 					e()
 				}else{
+					//重新導向到登入頁面
 					window.location.hash="login/"+window.location.hash
 				}
 			}
@@ -37,7 +38,9 @@
 				document.getElementById("evaluationButton").style.display="none"
 			}
 			document.getElementById("logoutButton").addEventListener("click",function(){
-				Parse.User.logOut();handler.navbar();
+				Parse.User.logOut();
+				handler.navbar();
+				//重新導入登入畫面
 				window.location.hash="login/"
 			})
 		},
@@ -64,7 +67,7 @@
 						var s=i.toJSON().evaluations
 					}
 					document.getElementById("content").innerHTML=e.evaluationView(s);
-					document.getElementById("evaluationForm-submit").value=i===undefined?"�銵典":"靽格銵典";
+					document.getElementById("evaluationForm-submit").value=i===undefined?"送出表單":"修改表單";
 					document.getElementById("evaluationForm").addEventListener("submit",function(){
 						for(var o=0;o<s.length;o++){
 							for(var u=0;u<s[o].scores.length;u++){
@@ -127,6 +130,8 @@
 					}
 				})
 			},false);
+
+			//註冊
 			document.getElementById("form-signup-student-id").addEventListener("keyup",function(){
 				i("form-signup-message",function(){
 					return r("form-signup-student-id")
@@ -157,6 +162,7 @@
 			},false)
 		}
 	};
+	//網址
 	var r=Parse.Router.extend({
 		routes:{
 			"":"indexView",
